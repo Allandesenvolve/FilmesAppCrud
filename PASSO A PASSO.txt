@@ -7,13 +7,13 @@ baixar extensão C# (verificar ativação, desativação, reload)
 criar pasta do projeto
 criar pasta src
 criar app COMANDO: dotnet new razor -o NOME_DO_APP
-baixar extensões: c#
 ativar omnisharp ao iniciar aplicação, confirmar ativação e verificar em "view, omnisharp log" a confirmação.
 
 -------------------------------------------------------------------------------------
 
 criar pasta modelo
 criar Modelo.cs
+
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -65,7 +65,8 @@ Comandos para configurar dotnet - adicionando pacotes:
 	dotnet ef migrations add InitialCreate;
 	dotnet ef database update;
 	dotnet tool install --global dotnet-aspnet-codegenerator --version 2.1.1880-700
-	dotnet aspnet-codegenerator razorpage -m Filme -dc FilmeContext -udl -outDir 			Pages\Filmes --referenceScriptLibraries
+	dotnet aspnet-codegenerator razorpage -m Filme -dc FilmeContext -udl -outDir 			
+	Pages\Filmes --referenceScriptLibraries
 -------------------------------------------------------------------------------------
 Dotnet build
 	teste de compilação
@@ -74,6 +75,7 @@ Dotnet run
 	iniciar app
 -------------------------------------------------------------------------------------
 Abrir arquivo Filme.cs
+
 	using System;
 	using System.ComponentModel.DataAnnotations;
 	System.ComponentModel.DataAnnotations.Schema;
