@@ -102,6 +102,9 @@ Abrir arquivo Filme.cs
        		  public decimal Preco { get; set; }
 
 -------------------------------------------------------------------------------------
+
+		AJUSTANDO AS VIEWs - .CSHTML
+		
 	
 ALTERANDO FORMATAÇÃO E CRIANDO DIVs NO ARQUIVO INDEX.CSHTML - bootstrap
 	div class"container"
