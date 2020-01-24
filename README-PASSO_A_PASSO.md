@@ -1,0 +1,397 @@
+# FilmesAppCrud
+
+Passo a passo resumido da criação do appweb
+
+Instalar visual studio code
+Instalar sdk (ver compatibilização de versões)
+baixar extensão C# (verificar ativação, desativação, reload)
+criar pasta do projeto
+criar pasta src
+criar app COMANDO: dotnet new razor -o NOME_DO_APP
+baixar extensões: c#
+ativar omnisharp ao iniciar aplicação, confirmar ativação e verificar em "view, omnisharp log" a confirmação.
+
+-------------------------------------------------------------------------------------
+
+criar pasta modelo
+criar Modelo.cs
+using System;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace FilmesCRUDRazor.Models 
+{
+    public class Filme
+    {
+        public int FilmeId { get; set; }
+
+        [Display(Name = "Título")]
+        [Required]
+        public string Titulo { get; set; }
+
+        [Display(Name = "Data de Lançamento")]
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
+        public DateTime DataLancamento { get; set; }          
+
+        [Display(Name = "Gênero")]
+        [Required]
+        public string Genero { get; set; }
+
+        [Display(Name = "Preço")]
+        [DataType(DataType.Currency)]
+        [Column(TypeName = "decimal(18,2)")]
+        public decimal Preco { get; set; }
+
+    }
+}
+-------------------------------------------------------------------------------------
+criar arquivo de contexto.cs
+	criar ModeloContext.cs	
+	criar arquivo instanciando o DbContext
+-------------------------------------------------------------------------------------
+configurar arquivo appsettings (conexão strings)
+	verificar conexão (endereço) e datasource
+-------------------------------------------------------------------------------------
+
+configurar startup
+	importar pelo using o entity frameworkCore;
+	importar pelo using o modelo;
+	configurar serviço addDbContext<FilmeContext>(options => options.SqlServer)...
+-------------------------------------------------------------------------------------
+Comandos para configurar dotnet - adicionando pacotes:
+
+	dotnet add package Microsoft.VisualStudio.Web.CodeGeneration.Design;
+	dotnet add package Microsoft.EntityFrameworkCore.SqlServer;
+	dotnet ef migrations add InitialCreate;
+	dotnet ef database update;
+	dotnet tool install --global dotnet-aspnet-codegenerator --version 2.1.1880-700
+	dotnet aspnet-codegenerator razorpage -m Filme -dc FilmeContext -udl -outDir 			Pages\Filmes --referenceScriptLibraries
+-------------------------------------------------------------------------------------
+Dotnet build
+	teste de compilação
+-------------------------------------------------------------------------------------
+Dotnet run		
+	iniciar app
+-------------------------------------------------------------------------------------
+Abrir arquivo Filme.cs
+	using System;
+	using System.ComponentModel.DataAnnotations;
+	System.ComponentModel.DataAnnotations.Schema;
+
+	namespace FilmesCRUDRazor.Models 
+	{
+ 	   public class Filme
+  	  {
+       		 public int FilmeId { get; set; }
+
+       		  [Display(Name = "Título")]
+       		  [Required]
+        	  public string Titulo { get; set; }
+
+      		  [Display(Name = "Data de Lançamento")]
+      		  [DisplayFormat(DataFormatString = "{0: dd/MM/yyyy}")]
+       		  public DateTime DataLancamento { get; set; }
+
+       		  [Display(Name = "Gênero")]
+       		  [Required]
+      		  public string Genero { get; set; }
+
+      		  [Display(Name = "Preço")]
+      		  [DataType(DataType.Currency)]
+       		  [Column(TypeName = "decimal(18,2)")]
+       		  public decimal Preco { get; set; }
+
+-------------------------------------------------------------------------------------
+	
+ALTERANDO FORMATAÇÃO E CRIANDO DIVs NO ARQUIVO INDEX.CSHTML - bootstrap
+	div class"container"
+	div class"row"
+ 	<a classe="btf btf-primary" asp-page="Create">Adicionar Filme</a>
+                <span class="glyphiocon glyphicon-plus"
+	<span>
+	table classe="table-responsive"
+
+-------------------------------------------------------------------------------------
+
+ALTERANDO INDEX.CSHTML - CRIANDO BOTÕES - página FILMES - bootstrap (paginação)
+
+
+ <td class="text-center">
+                <a class="btn btn-warning" asp-page="./Edit" asp-route-id="@item.FilmeId"><span class="glyphicon glyphicon-pencil"></span> </a>
+                <a class="btn btn-info" asp-page="./Details" asp-route-id="@item.FilmeId"><span class="glyphicon glyphicon-info-sing"></span> </a>
+                <a class="btn btn-danger" asp-page="./Delete" asp-route-id="@item.FilmeId"><span class="glyphicon glyphicon-trash"></span> </a>
+            </td>
+        </tr>
+
+-------------------------------------------------------------------------------------
+
+
+ALTERANDO EDIT.CSHTML - BOTÃO EDITAR
+
+
+<div class="container">
+    <div class="row">  
+        <h2>Editar Filme</h2>  
+        <h4> Filme Top</h4>
+        <hr/>
+        <div class="row">
+            <div class="col-md-4">
+                <form method="post">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input type="hidden" asp-for="Filme.FilmeId" />
+                    <div class="form-group">
+                        <label asp-for="Filme.Titulo" class="control-label"></label>
+                        <input asp-for="Filme.Titulo" class="form-control" />
+                        <span asp-validation-for="Filme.Titulo" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Filme.DataLancamento" class="control-label"></label>
+                        <input asp-for="Filme.DataLancamento" class="form-control" />
+                        <span asp-validation-for="Filme.DataLancamento" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Filme.Genero" class="control-label"></label>
+                        <input asp-for="Filme.Genero" class="form-control" />
+                        <span asp-validation-for="Filme.Genero" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Filme.Preco" class="control-label"></label>
+                        <input asp-for="Filme.Preco" class="form-control" />
+                        <span asp-validation-for="Filme.Preco" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Salvar" class="btn btn-default" />
+                        <a class="btn btn-default" asp-page="./Index">Retornar a Lista</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    <div>
+            
+</div>
+ @section Scripts {
+ @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+ }
+
+
+----------------------------------------------------------------------------------------
+
+
+ALTERANDO CREATE.CSHTML - BOTÃO CRIAR
+
+@page
+@model FilmesCRUDRazor.Pages.Filmes.CreateModel
+
+@{
+    ViewData["Title"] = "Criar";
+}
+
+
+
+<div class="container">
+    <div class="row">
+        <h2>Adicionar Filme</h2>
+        <h4>Filmpes Top</h4>
+        <hr />
+            <div class="row">
+                <div class="col-md-4">
+                <form method="post">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group">
+                        <label asp-for="Filme.Titulo" class="control-label"></label>
+                        <input asp-for="Filme.Titulo" class="form-control" />
+                        <span asp-validation-for="Filme.Titulo" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Filme.DataLancamento" class="control-label"></label>
+                        <input asp-for="Filme.DataLancamento" class="form-control" />
+                        <span asp-validation-for="Filme.DataLancamento" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Filme.Genero" class="control-label"></label>
+                        <input asp-for="Filme.Genero" class="form-control" />
+                        <span asp-validation-for="Filme.Genero" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Filme.Preco" class="control-label"></label>
+                        <input asp-for="Filme.Preco" class="form-control" />
+                        <span asp-validation-for="Filme.Preco" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <input type=submit value="Adicionar" class="btn btn-primary" />
+                        <a class="btn btn-default" asp-page="Index">Retornar a Lista</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    <div>  
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+
+
+
+---------------------------------------------------------------------------------------------------------
+
+
+
+ADICIONANDO BUSCA NO INDEX.CSHTML
+
+@page
+@model FilmesCRUDRazor.Pages.Filmes.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+@{
+    Layout = "_Layout";
+}
+
+<div class="container">
+   <div class="row">
+      <div class="col-md-12">
+         <h2>Filmes Top +</h2>
+         <p>
+            <a class="btn btn-primary" asp-page="Create">
+            <span class="glyphicon glyphicon-plus"></span> Adicionar Filme
+            </a>
+         </p>
+         <form>
+             <div class="row">
+                 <div class="col-md-6">
+                     <label class="text-left">Gêneros:</label>
+                     <select class="form-control" asp-for="FilmePorGenero" asp-items="Model.Generos">
+                         <option value="">Todos - Gêneros</option>
+                     </select>
+                 </div>
+             </div>
+             <br />
+             <div class="row">
+                 <div class="col-md-6">
+                     <label class="text-left">Título do Filme</label>
+                     <input class="form-control" type="text" name="BuscaPorGeneroNome" />
+                     <br />
+                     <input class="btn btn-primary" type="submit" value="Filtrar" />
+                 </div>
+             </div>
+         </form>
+         <div class="table-responsive">
+            <table class="table table-striped">
+               <thead>
+                  <tr>
+                     <th class="text-center">
+                        @Html.DisplayNameFor(model => model.Filme[0].Titulo)
+                     </th>
+                     <th class="text-center">
+                        @Html.DisplayNameFor(model => model.Filme[0].DataLancamento)
+                     </th>
+                     <th class="text-center">
+                        @Html.DisplayNameFor(model => model.Filme[0].Genero)
+                     </th>
+                     <th class="text-center">
+                        @Html.DisplayNameFor(model => model.Filme[0].Preco)
+                     </th>
+                     <th class="text-center">Ações</th>
+                  </tr>
+               </thead>
+               <tbody>
+                  @foreach (var item in Model.Filme) {
+                  <tr>
+                     <td class="text-center">
+                        @Html.DisplayFor(modelItem => item.Titulo)
+                     </td>
+                     <td class="text-center">
+                        @Html.DisplayFor(modelItem => item.DataLancamento)
+                     </td>
+                     <td class="text-center">
+                        @Html.DisplayFor(modelItem => item.Genero)
+                     </td>
+                     <td class="text-center">
+                        @Html.DisplayFor(modelItem => item.Preco)
+                     </td>
+                     <td class="text-center">
+                        <a class="btn btn-warning" asp-page="./Edit" asp-route-id="@item.FilmeId"><span class="glyphicon glyphicon-pencil"></span> </a> 
+                        <a class="btn btn-info" asp-page="./Details" asp-route-id="@item.FilmeId"><span class="glyphicon glyphicon-info-sign"></span> </a> 
+                        <a class="btn btn-danger" asp-page="./Delete" asp-route-id="@item.FilmeId"><span class="glyphicon glyphicon-trash"></span> </a>
+                     </td>
+                  </tr>
+                  }
+               </tbody>
+            </table>
+            <div class="clearfix"></div>
+            <ul class="pagination pull-right">
+                <li class="disabled"><a href="#"><span class="glyphicon glyphicon-chevron-left"></span></a></li>
+                <li class="active"><a href="#">1</a></li>
+                <li class="#"><a href="#">2</a></li>
+                <li class="#"><a href="#">3</a></li>
+                <li class="#"><a href="#">4</a></li>
+                <li class="#"><a href="#">5</a></li>
+                <li><a href="#"><span class="glyphicon glyphicon-chevron-right"></span></a></li>
+            </ul>
+         </div>
+      </div>
+   </div>
+</div>
+
+
+ESTUDAR LINQ
+
+-----------------------------------------------------------------------------------------------------------------------------
+
+Realizando o Build & Deploy da Aplicação para Azure
+
+criar pasta APPDATA e colocar o arquivo de banco de dados .db
+
+
+
+APPSETTING.JSON
+
+{
+  "Logging": {
+    "IncludeScopes": false,
+    "LogLevel": {
+      "Default": "Warning"
+    }
+  },
+  "ConnectionStrings": {
+    "DefaultConnection": "Data Source=C:\\Users\\allan.alencar\\Documents\\PROJETOCRUD\\workshop-net-core-iniciantes-master\\src\\FilmesCRUDRazor\\App_data\\FilmeCrud.db"
+  }
+}
+
+
+
+
+STARTUP
+
+services.AddDbContext<FilmeContext>(options => options.UseSqlite(Configuration.GetConnectionString("DefaultConnection")));
+
+
+VERIFICAR O CONCEITO DE "SECRET" PARA INSERIR SENHAS NO VISUAL CODE
+
+
+precisa possuir conta no AZURE e instalar extensão no VS com AZURE SERVICE
+
+baixar o git
+
+PARA CRIAR USUARIO NO AZURE
+az webapp deployment user set --user-name allan_alencar --password *******
+
+
+entrar no azure no VS, logar e criar um appweb e nomear, escolher windows
+
+
+----------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
