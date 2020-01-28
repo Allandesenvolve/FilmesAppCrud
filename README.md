@@ -26,6 +26,7 @@ Parte 4: Adicionando busca para a aplicação Razor Pages;
 
 Parte 5: Build & Deploy da Aplicação no Azure App Service;
 
+
 Passos:
 
 - Criando aplicação .NET Core;
@@ -42,12 +43,17 @@ Passos:
 
 - Build & Deploy da Aplicação para o Azure e Git;
 
+
 Comandos para utilizar o projeto de maneira local, executando os comandos abaixo:
 
 - dotnet add package Microsoft.VisualStudio.Web.CodeGeneration.Design;
+
 - dotnet add package Microsoft.EntityFrameworkCore.Sqlite;
+
 - dotnet restore;
+
 - dotnet ef migrations add InitialCreate;
+
 - dotnet ef database update;
 
 Foi criado uma base de dados para que possa ser testada na hora de executar a aplicação ao dar o comando: "dotnet run" na raiz do projeto:
