@@ -14,25 +14,35 @@ Realizado a instalação das aplicações/frameworks abaixo:
 Primeira aplicação Web .NET Core 2.x Razor Pages. A aplicação constitui em um CRUD (Create, Read, Update e Delete) de um site de Filmes: 
 
 
-Etapas
+Etapas:
 
 Parte 1: Criando Razor Pages usando o dotnet CLI e VS Code;
+
 Parte 2: Adicionando um modelo para a aplicaçao ASP.NET Core Razor Pages;
+
 Parte 3: Atualizando e gerando páginas;
+
 Parte 4: Adicionando busca para a aplicação Razor Pages;
+
 Parte 5: Build & Deploy da Aplicação no Azure App Service;
 
-Passos
+Passos:
 
 - Criando aplicação .NET Core;
+
 - Instalando Importantes Plugins do VS Code;
+
 - Adicionando Modelo & Criando a BD com EF Core;
+
 - Data Annotations na Classe Modelo;
-- Melhorias de Front-End no Projeto (.cshtml);
+
+- Melhorias de Front-End no Projeto (.cshtml;
+
 - Adicionando Busca no Index.html;
+
 - Build & Deploy da Aplicação para o Azure e Git;
 
-Comandos para utilizar o projeto de maneira local, executando os comandos abaixo
+Comandos para utilizar o projeto de maneira local, executando os comandos abaixo:
 
 - dotnet add package Microsoft.VisualStudio.Web.CodeGeneration.Design;
 - dotnet add package Microsoft.EntityFrameworkCore.Sqlite;
